@@ -1,0 +1,7 @@
+body {
+    background-color: mintcream;
+}
+hr {
+    border: 0; 
+    border-top: .20rem dashed #000; 
+}
