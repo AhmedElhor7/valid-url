@@ -80,18 +80,19 @@
       }
 
 function isValidURL(url) {
+  // Define a regex pattern to match URLs ending with .com or .net
   const pattern = new RegExp(
-    "^(https?:\\/\\/)?" + // Protocol (http or https)
-      "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + // Domain name
-      "(\\d{1,3}\\.){3}\\d{1,3})" + // OR IP address (IPv4)
-      "(\\:\\d+)?" + // Optional port
-      "(\\/[-a-z\\d%_.~+]*)*" + // Optional path
+    "^(https?:\\/\\/)?" + // Optional protocol
+      "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,})" + // Domain name
+      "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + // Optional port and path
       "(\\?[;&a-z\\d%_.~+=-]*)?" + // Optional query string
       "(\\#[-a-z\\d_]*)?$", // Optional fragment locator
     "i"
   );
 
-  const isValid = pattern.test(url);
+  const tldPattern = /\.(com|net)$/i;
+
+  const isValid = pattern.test(url) && tldPattern.test(url);
 
   // Toggle validity classes based on the result
   BookMarkUrlInput.classList.toggle("is-valid", isValid);
@@ -99,6 +100,13 @@ function isValidURL(url) {
 
   return isValid;
 }
+
+// Add event listener for real-time validation
+BookMarkUrlInput.addEventListener("input", () =>
+  isValidURL(BookMarkUrlInput.value)
+);
+
+
 
 
       function showModal(message) {
